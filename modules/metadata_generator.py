@@ -76,17 +76,29 @@ class MetadataGenerator:
 
     def _generate_with_local_llm(self, segments: list, original_title: str) -> Dict:
         client = LocalLLMProvider()
-        response_text = client.generate(
-            system_prompt=(
-                "You are a Vietnamese social-media editor. Return only valid JSON "
-                "matching the requested schema."
-            ),
-            user_prompt=self._metadata_prompt(segments, original_title),
-            temperature=0.6,
-            max_tokens=1024,
-            json_mode=True,
-        )
-        return self._parse_and_save(response_text, segments)
+        max_retries = 3
+        
+        for attempt in range(max_retries):
+            try:
+                response_text = client.generate(
+                    system_prompt=(
+                        "You are a Vietnamese social-media editor. Return only valid JSON "
+                        "matching the requested schema."
+                    ),
+                    user_prompt=self._metadata_prompt(segments, original_title),
+                    temperature=0.6 + (attempt * 0.1),
+                    max_tokens=1024,
+                    json_mode=True,
+                )
+                return self._parse_and_save(response_text, segments, strict=True)
+            except Exception as e:
+                print(f"[Metadata] Local LLM attempt {attempt + 1} failed: {e}")
+                
+        print("[Metadata] Local LLM completely failed, using defaults")
+        metadata = self._generate_default_metadata()
+        self._save_metadata(metadata)
+        self._save_thumbnail_prompts(metadata["thumbnail_prompt"])
+        return metadata
 
     def _generate_with_gemini(
         self,
@@ -181,14 +193,16 @@ Return ONLY valid JSON in this exact format:
 Transcript:
 {self._prepare_summary(segments)}"""
 
-    def _parse_and_save(self, response_text: str, segments: list) -> Dict:
+    def _parse_and_save(self, response_text: str, segments: list, strict: bool = False) -> Dict:
         """Parse response and save metadata files."""
         try:
             # Extract JSON
             json_str = self._extract_json(response_text)
             metadata = json.loads(json_str)
 
-        except (json.JSONDecodeError, TypeError, ValueError):
+        except (json.JSONDecodeError, TypeError, ValueError) as e:
+            if strict:
+                raise ValueError(f"Failed to parse JSON: {e}")
             print("[Metadata] Failed to parse response, using defaults")
             metadata = self._generate_default_metadata()
 

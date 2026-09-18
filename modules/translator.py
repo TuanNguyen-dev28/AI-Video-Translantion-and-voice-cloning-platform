@@ -71,22 +71,42 @@ class Translator:
         return self._translate_with_groq(segments)
 
     def _translate_with_local_llm(self, segments: List[Dict]) -> List[Dict]:
-        """Translate in bounded batches to avoid exceeding local model context."""
+        """Translate in bounded batches with retries to ensure valid JSON."""
         client = LocalLLMProvider()
         translations: List[Dict] = []
+        max_retries = 3
+
         for start in range(0, len(segments), TRANSLATION_BATCH_SIZE):
             batch = segments[start : start + TRANSLATION_BATCH_SIZE]
-            response_text = client.generate(
-                system_prompt=(
-                    "You are a professional translator. Translate accurately to "
-                    "natural Vietnamese and return only the requested JSON."
-                ),
-                user_prompt=self._translation_prompt(batch),
-                temperature=0.2,
-                max_tokens=4096,
-                json_mode=True,
-            )
-            translations.extend(self._parse_translation_response(response_text, batch))
+            
+            batch_translations = None
+            for attempt in range(max_retries):
+                try:
+                    response_text = client.generate(
+                        system_prompt=(
+                            "You are a professional translator. Translate accurately to "
+                            "natural Vietnamese and return ONLY valid JSON."
+                        ),
+                        user_prompt=self._translation_prompt(batch),
+                        temperature=0.2 + (attempt * 0.1),
+                        max_tokens=4096,
+                        json_mode=True,
+                    )
+                    
+                    parsed = self._parse_translation_response(response_text, batch, strict=True)
+                    if not parsed or len(parsed) < len(batch) * 0.8:
+                        raise ValueError(f"Incomplete translation: got {len(parsed)} items for {len(batch)} input segments.")
+                    
+                    batch_translations = parsed
+                    break  # Success
+                except Exception as exc:
+                    print(f"[Translator] Local LLM batch {start} attempt {attempt + 1} failed: {exc}")
+            
+            if not batch_translations:
+                 print(f"[Translator] Local LLM batch {start} completely failed. Using original text.")
+                 batch_translations = [{"id": seg["id"], "text_vi": seg.get("text", "")} for seg in batch]
+                 
+            translations.extend(batch_translations)
 
         self.translated_segments = self._merge_translations(segments, translations)
         self._save_translated_json()
@@ -177,14 +197,16 @@ Transcript to translate:
 {self._prepare_text(segments)}"""
 
     def _parse_translation_response(
-        self, response_text: str, segments: List[Dict]
+        self, response_text: str, segments: List[Dict], strict: bool = False
     ) -> List[Dict]:
         """Parse translation response from AI."""
         try:
             json_str = self._extract_json(response_text)
             data = json.loads(json_str)
             return data.get("translations", [])
-        except (json.JSONDecodeError, TypeError, KeyError):
+        except (json.JSONDecodeError, TypeError, KeyError) as e:
+            if strict:
+                raise ValueError(f"Failed to parse JSON: {e}")
             print("[Translator] Failed to parse response, using original text")
             return [{"id": seg["id"], "text_vi": seg.get("text", "")} for seg in segments]
 
