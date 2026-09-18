@@ -127,10 +127,24 @@ function App() {
                       )}
 
                       {result.upload_pending && (
-                        <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
+                        <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                           <p className="text-amber-300 text-sm">
-                            ⏳ Video đã tạo xong và đang chờ duyệt. Bật AUTO_PUBLISH=true để tự động đăng.
+                            ⏳ Video đã tạo xong và đang chờ duyệt. Bạn có thể xem video ở trên trước khi quyết định.
                           </p>
+                          <button
+                            onClick={async () => {
+                              try {
+                                const res = await fetch(`${API_BASE}/api/publish/${jobId}`, { method: 'POST' });
+                                if (!res.ok) throw new Error('API Error');
+                                alert('Đã gửi lệnh đăng tải! Vui lòng xem logs để theo dõi tiến trình.');
+                              } catch (e) {
+                                alert('Lỗi khi gửi yêu cầu đăng tải');
+                              }
+                            }}
+                            className="bg-amber-600 hover:bg-amber-500 text-white px-4 py-2 rounded-md text-sm font-semibold transition-all shadow-lg shadow-amber-500/20 whitespace-nowrap"
+                          >
+                            Duyệt & Đăng tải
+                          </button>
                         </div>
                       )}
 
