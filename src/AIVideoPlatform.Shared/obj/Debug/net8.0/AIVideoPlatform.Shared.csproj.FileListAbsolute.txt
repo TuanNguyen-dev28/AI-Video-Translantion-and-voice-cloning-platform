@@ -1,0 +1,12 @@
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Shared\bin\Debug\net8.0\AIVideoPlatform.Shared.deps.json
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Shared\bin\Debug\net8.0\AIVideoPlatform.Shared.dll
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Shared\bin\Debug\net8.0\AIVideoPlatform.Shared.pdb
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Shared\obj\Debug\net8.0\AIVideoPlatform.Shared.GeneratedMSBuildEditorConfig.editorconfig
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Shared\obj\Debug\net8.0\AIVideoPlatform.Shared.AssemblyInfoInputs.cache
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Shared\obj\Debug\net8.0\AIVideoPlatform.Shared.AssemblyInfo.cs
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Shared\obj\Debug\net8.0\AIVideoPlatform.Shared.csproj.CoreCompileInputs.cache
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Shared\obj\Debug\net8.0\AIVideoPlatform.Shared.sourcelink.json
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Shared\obj\Debug\net8.0\AIVideoPlatform.Shared.dll
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Shared\obj\Debug\net8.0\refint\AIVideoPlatform.Shared.dll
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Shared\obj\Debug\net8.0\AIVideoPlatform.Shared.pdb
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Shared\obj\Debug\net8.0\ref\AIVideoPlatform.Shared.dll

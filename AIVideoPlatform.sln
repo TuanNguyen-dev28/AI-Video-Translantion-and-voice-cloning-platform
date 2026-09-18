@@ -1,0 +1,106 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{56D46B06-2A0C-47C0-8D62-F24941DF55DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIVideoPlatform.Api", "src\AIVideoPlatform.Api\AIVideoPlatform.Api.csproj", "{EE0719A2-0709-4776-9CAF-AEACD24BA585}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIVideoPlatform.Application", "src\AIVideoPlatform.Application\AIVideoPlatform.Application.csproj", "{9A74C6E4-2F0A-40C2-A7AF-58744DBB990E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIVideoPlatform.Domain", "src\AIVideoPlatform.Domain\AIVideoPlatform.Domain.csproj", "{15DEEEE5-FBF5-4A7A-9BB2-6B677609B0DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIVideoPlatform.Infrastructure", "src\AIVideoPlatform.Infrastructure\AIVideoPlatform.Infrastructure.csproj", "{AD947B56-A7B4-49E1-BCB6-AAEEABFD7DE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIVideoPlatform.Shared", "src\AIVideoPlatform.Shared\AIVideoPlatform.Shared.csproj", "{D94928A0-53C1-4AD3-BDC9-56003AE5B790}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIVideoPlatform.Worker.Orchestrator", "src\AIVideoPlatform.Worker.Orchestrator\AIVideoPlatform.Worker.Orchestrator.csproj", "{03217E03-FF6F-48F0-A1C0-8A62B26F4AA6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIVideoPlatform.Worker.Media", "src\AIVideoPlatform.Worker.Media\AIVideoPlatform.Worker.Media.csproj", "{47D8F79D-6E0D-413B-B630-7B1B426A7FC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIVideoPlatform.Worker.AI", "src\AIVideoPlatform.Worker.AI\AIVideoPlatform.Worker.AI.csproj", "{3524FFA2-1917-436F-AD3D-430714B25067}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIVideoPlatform.Worker.Publisher", "src\AIVideoPlatform.Worker.Publisher\AIVideoPlatform.Worker.Publisher.csproj", "{5E402EA4-FEC2-49D7-A91B-D009D94089EB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2B90A9BA-285F-4C8C-9CCD-FCB42764AD25}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIVideoPlatform.Domain.Tests", "tests\AIVideoPlatform.Domain.Tests\AIVideoPlatform.Domain.Tests.csproj", "{5C34FBB8-BC42-4FE2-A02E-B41AC9C6EDAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIVideoPlatform.Application.Tests", "tests\AIVideoPlatform.Application.Tests\AIVideoPlatform.Application.Tests.csproj", "{9CCFCF13-CEFB-43AD-B379-D6FACAE87327}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIVideoPlatform.Infrastructure.Tests", "tests\AIVideoPlatform.Infrastructure.Tests\AIVideoPlatform.Infrastructure.Tests.csproj", "{C612EF87-FF7C-4413-8E64-882B29E93C4A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EE0719A2-0709-4776-9CAF-AEACD24BA585}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE0719A2-0709-4776-9CAF-AEACD24BA585}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE0719A2-0709-4776-9CAF-AEACD24BA585}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE0719A2-0709-4776-9CAF-AEACD24BA585}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A74C6E4-2F0A-40C2-A7AF-58744DBB990E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A74C6E4-2F0A-40C2-A7AF-58744DBB990E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A74C6E4-2F0A-40C2-A7AF-58744DBB990E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A74C6E4-2F0A-40C2-A7AF-58744DBB990E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15DEEEE5-FBF5-4A7A-9BB2-6B677609B0DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15DEEEE5-FBF5-4A7A-9BB2-6B677609B0DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15DEEEE5-FBF5-4A7A-9BB2-6B677609B0DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15DEEEE5-FBF5-4A7A-9BB2-6B677609B0DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD947B56-A7B4-49E1-BCB6-AAEEABFD7DE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD947B56-A7B4-49E1-BCB6-AAEEABFD7DE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD947B56-A7B4-49E1-BCB6-AAEEABFD7DE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD947B56-A7B4-49E1-BCB6-AAEEABFD7DE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D94928A0-53C1-4AD3-BDC9-56003AE5B790}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D94928A0-53C1-4AD3-BDC9-56003AE5B790}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D94928A0-53C1-4AD3-BDC9-56003AE5B790}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D94928A0-53C1-4AD3-BDC9-56003AE5B790}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03217E03-FF6F-48F0-A1C0-8A62B26F4AA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03217E03-FF6F-48F0-A1C0-8A62B26F4AA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03217E03-FF6F-48F0-A1C0-8A62B26F4AA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03217E03-FF6F-48F0-A1C0-8A62B26F4AA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47D8F79D-6E0D-413B-B630-7B1B426A7FC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47D8F79D-6E0D-413B-B630-7B1B426A7FC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47D8F79D-6E0D-413B-B630-7B1B426A7FC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47D8F79D-6E0D-413B-B630-7B1B426A7FC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3524FFA2-1917-436F-AD3D-430714B25067}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3524FFA2-1917-436F-AD3D-430714B25067}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3524FFA2-1917-436F-AD3D-430714B25067}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3524FFA2-1917-436F-AD3D-430714B25067}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E402EA4-FEC2-49D7-A91B-D009D94089EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E402EA4-FEC2-49D7-A91B-D009D94089EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E402EA4-FEC2-49D7-A91B-D009D94089EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E402EA4-FEC2-49D7-A91B-D009D94089EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C34FBB8-BC42-4FE2-A02E-B41AC9C6EDAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C34FBB8-BC42-4FE2-A02E-B41AC9C6EDAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C34FBB8-BC42-4FE2-A02E-B41AC9C6EDAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C34FBB8-BC42-4FE2-A02E-B41AC9C6EDAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CCFCF13-CEFB-43AD-B379-D6FACAE87327}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CCFCF13-CEFB-43AD-B379-D6FACAE87327}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CCFCF13-CEFB-43AD-B379-D6FACAE87327}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CCFCF13-CEFB-43AD-B379-D6FACAE87327}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C612EF87-FF7C-4413-8E64-882B29E93C4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C612EF87-FF7C-4413-8E64-882B29E93C4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C612EF87-FF7C-4413-8E64-882B29E93C4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C612EF87-FF7C-4413-8E64-882B29E93C4A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EE0719A2-0709-4776-9CAF-AEACD24BA585} = {56D46B06-2A0C-47C0-8D62-F24941DF55DE}
+		{9A74C6E4-2F0A-40C2-A7AF-58744DBB990E} = {56D46B06-2A0C-47C0-8D62-F24941DF55DE}
+		{15DEEEE5-FBF5-4A7A-9BB2-6B677609B0DD} = {56D46B06-2A0C-47C0-8D62-F24941DF55DE}
+		{AD947B56-A7B4-49E1-BCB6-AAEEABFD7DE2} = {56D46B06-2A0C-47C0-8D62-F24941DF55DE}
+		{D94928A0-53C1-4AD3-BDC9-56003AE5B790} = {56D46B06-2A0C-47C0-8D62-F24941DF55DE}
+		{03217E03-FF6F-48F0-A1C0-8A62B26F4AA6} = {56D46B06-2A0C-47C0-8D62-F24941DF55DE}
+		{47D8F79D-6E0D-413B-B630-7B1B426A7FC6} = {56D46B06-2A0C-47C0-8D62-F24941DF55DE}
+		{3524FFA2-1917-436F-AD3D-430714B25067} = {56D46B06-2A0C-47C0-8D62-F24941DF55DE}
+		{5E402EA4-FEC2-49D7-A91B-D009D94089EB} = {56D46B06-2A0C-47C0-8D62-F24941DF55DE}
+		{5C34FBB8-BC42-4FE2-A02E-B41AC9C6EDAB} = {2B90A9BA-285F-4C8C-9CCD-FCB42764AD25}
+		{9CCFCF13-CEFB-43AD-B379-D6FACAE87327} = {2B90A9BA-285F-4C8C-9CCD-FCB42764AD25}
+		{C612EF87-FF7C-4413-8E64-882B29E93C4A} = {2B90A9BA-285F-4C8C-9CCD-FCB42764AD25}
+	EndGlobalSection
+EndGlobal

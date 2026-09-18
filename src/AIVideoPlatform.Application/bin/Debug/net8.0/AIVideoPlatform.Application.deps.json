@@ -1,0 +1,39 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "AIVideoPlatform.Application/1.0.0": {
+        "dependencies": {
+          "AIVideoPlatform.Domain": "1.0.0"
+        },
+        "runtime": {
+          "AIVideoPlatform.Application.dll": {}
+        }
+      },
+      "AIVideoPlatform.Domain/1.0.0": {
+        "runtime": {
+          "AIVideoPlatform.Domain.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "AIVideoPlatform.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "AIVideoPlatform.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

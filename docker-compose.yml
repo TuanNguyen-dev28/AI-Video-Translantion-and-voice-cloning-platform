@@ -1,81 +1,118 @@
-version: '3.8'
+﻿version: '3.8'
 
 services:
   postgres:
-    image: postgres:15
+    image: postgres:15-alpine
     environment:
-      POSTGRES_USER: video_user
-      POSTGRES_PASSWORD: video_password
-      POSTGRES_DB: video_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: AIVideoPlatform
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    restart: always
+    networks:
+      - ai-video-network
 
   redis:
     image: redis:7-alpine
     ports:
       - "6379:6379"
+    networks:
+      - ai-video-network
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - ai-video-network
+
+  minio:
+    image: minio/minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    ports:
+      - "9000:9000"
+      - "9001:9001"
     volumes:
-      - redis_data:/data
-    restart: always
+      - minio_data:/data
+    networks:
+      - ai-video-network
 
   api:
     build:
       context: .
       dockerfile: Dockerfile
-    command: uvicorn main:app --host 0.0.0.0 --port 8000
+      args:
+        PROJECT: AIVideoPlatform.Api
     ports:
-      - "8000:8000"
-    environment:
-      - DATABASE_URL=postgresql://video_user:video_password@postgres:5432/video_db
-      - REDIS_URL=redis://redis:6379/0
-      - ASR_PROVIDER=local
-      - TEXT_PROVIDER=local
-      - TTS_PROVIDER=edge
-      - AUTO_PUBLISH=false
-      - LOCAL_LLM_BASE_URL=http://host.docker.internal:11434/v1
+      - "8080:8080"
     depends_on:
       - postgres
       - redis
-    volumes:
-      - ./data:/app/data
-      - ./output:/app/output
-      - ./.env:/app/.env
-    restart: always
+      - rabbitmq
+      - minio
+    networks:
+      - ai-video-network
 
-  worker:
+  worker-orchestrator:
     build:
       context: .
       dockerfile: Dockerfile
-    command: python worker.py
-    environment:
-      - DATABASE_URL=postgresql://video_user:video_password@postgres:5432/video_db
-      - REDIS_URL=redis://redis:6379/0
-      - ASR_PROVIDER=local
-      - TEXT_PROVIDER=local
-      - TTS_PROVIDER=edge
-      - AUTO_PUBLISH=false
-      - LOCAL_LLM_BASE_URL=http://host.docker.internal:11434/v1
+      args:
+        PROJECT: AIVideoPlatform.Worker.Orchestrator
     depends_on:
-      - postgres
-      - redis
-    volumes:
-      - ./data:/app/data
-      - ./output:/app/output
-      - ./.env:/app/.env
-      - worker_cache:/root/.cache/huggingface
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu]
-    restart: always
+      - rabbitmq
+    networks:
+      - ai-video-network
+
+  worker-media:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PROJECT: AIVideoPlatform.Worker.Media
+    depends_on:
+      - rabbitmq
+      - minio
+    networks:
+      - ai-video-network
+
+  worker-ai:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PROJECT: AIVideoPlatform.Worker.AI
+    depends_on:
+      - rabbitmq
+      - minio
+    networks:
+      - ai-video-network
+
+  worker-publisher:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PROJECT: AIVideoPlatform.Worker.Publisher
+    depends_on:
+      - rabbitmq
+      - minio
+    networks:
+      - ai-video-network
+
+networks:
+  ai-video-network:
+    driver: bridge
 
 volumes:
   postgres_data:
-  redis_data:
-  worker_cache:
+  minio_data:

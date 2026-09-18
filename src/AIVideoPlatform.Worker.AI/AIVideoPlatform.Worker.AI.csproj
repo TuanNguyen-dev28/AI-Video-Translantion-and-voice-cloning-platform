@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-AIVideoPlatform.Worker.AI-8b0e665f-da46-437b-b1f2-55d7f3784f96</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AIVideoPlatform.Application\AIVideoPlatform.Application.csproj" />
+    <ProjectReference Include="..\AIVideoPlatform.Infrastructure\AIVideoPlatform.Infrastructure.csproj" />
+    <ProjectReference Include="..\AIVideoPlatform.Shared\AIVideoPlatform.Shared.csproj" />
+  </ItemGroup>
+</Project>

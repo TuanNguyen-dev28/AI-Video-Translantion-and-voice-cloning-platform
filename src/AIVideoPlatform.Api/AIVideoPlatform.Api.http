@@ -1,0 +1,6 @@
+@AIVideoPlatform.Api_HostAddress = http://localhost:5229
+
+GET {{AIVideoPlatform.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,16 @@
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Application\bin\Debug\net8.0\AIVideoPlatform.Application.deps.json
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Application\bin\Debug\net8.0\AIVideoPlatform.Application.dll
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Application\bin\Debug\net8.0\AIVideoPlatform.Application.pdb
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Application\bin\Debug\net8.0\AIVideoPlatform.Domain.dll
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Application\bin\Debug\net8.0\AIVideoPlatform.Domain.pdb
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Application\obj\Debug\net8.0\AIVideoPlatform.Application.csproj.AssemblyReference.cache
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Application\obj\Debug\net8.0\AIVideoPlatform.Application.GeneratedMSBuildEditorConfig.editorconfig
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Application\obj\Debug\net8.0\AIVideoPlatform.Application.AssemblyInfoInputs.cache
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Application\obj\Debug\net8.0\AIVideoPlatform.Application.AssemblyInfo.cs
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Application\obj\Debug\net8.0\AIVideoPlatform.Application.csproj.CoreCompileInputs.cache
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Application\obj\Debug\net8.0\AIVideoPlatform.Application.sourcelink.json
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Application\obj\Debug\net8.0\AIVideoP.F48958CA.Up2Date
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Application\obj\Debug\net8.0\AIVideoPlatform.Application.dll
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Application\obj\Debug\net8.0\refint\AIVideoPlatform.Application.dll
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Application\obj\Debug\net8.0\AIVideoPlatform.Application.pdb
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Application\obj\Debug\net8.0\ref\AIVideoPlatform.Application.dll

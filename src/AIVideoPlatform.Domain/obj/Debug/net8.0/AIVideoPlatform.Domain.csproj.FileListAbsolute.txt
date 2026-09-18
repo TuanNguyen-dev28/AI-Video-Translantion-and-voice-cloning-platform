@@ -1,0 +1,12 @@
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Domain\bin\Debug\net8.0\AIVideoPlatform.Domain.deps.json
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Domain\bin\Debug\net8.0\AIVideoPlatform.Domain.dll
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Domain\bin\Debug\net8.0\AIVideoPlatform.Domain.pdb
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Domain\obj\Debug\net8.0\AIVideoPlatform.Domain.GeneratedMSBuildEditorConfig.editorconfig
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Domain\obj\Debug\net8.0\AIVideoPlatform.Domain.AssemblyInfoInputs.cache
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Domain\obj\Debug\net8.0\AIVideoPlatform.Domain.AssemblyInfo.cs
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Domain\obj\Debug\net8.0\AIVideoPlatform.Domain.csproj.CoreCompileInputs.cache
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Domain\obj\Debug\net8.0\AIVideoPlatform.Domain.sourcelink.json
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Domain\obj\Debug\net8.0\AIVideoPlatform.Domain.dll
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Domain\obj\Debug\net8.0\refint\AIVideoPlatform.Domain.dll
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Domain\obj\Debug\net8.0\AIVideoPlatform.Domain.pdb
+E:\AI\AI Video Translantion and voice cloning platform\src\AIVideoPlatform.Domain\obj\Debug\net8.0\ref\AIVideoPlatform.Domain.dll

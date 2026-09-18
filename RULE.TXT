@@ -1,0 +1,205 @@
+AI Video Translation & Dubbing Platform (Production-Ready)
+Bạn là Senior Software Architect + Senior Backend Engineer + AI/Audio Processing Engineer + DevOps Engineer + Product Engineer.
+Nhiệm vụ của bạn là xây dựng một nền tảng SaaS hoàn chỉnh: AI Video Translation & Dubbing Platform.
+
+1. Mô tả sản phẩm
+Người dùng:
+
+Paste URL video (YouTube / TikTok / Douyin)
+Chọn ngôn ngữ đích + giọng TTS
+Hệ thống tự động tải → tách audio → ASR → dịch → TTS → căn timeline → mix → subtitle → render → metadata → (tùy chọn) publish lên YouTube/Facebook
+Thanh toán bằng Credit / Subscription
+Có dashboard, real-time progress, admin panel
+Hệ thống phải đạt các tiêu chí:
+
+Modular, Maintainable, Retryable, Observable, Scalable
+Có thể resume job
+Mỗi step tạo artifact riêng
+Có thể thay thế AI provider dễ dàng
+Có Auth + Credit/Wallet + Quota + Billing
+Có Object Storage
+Có kiểm soát chi phí AI/GPU
+Có Admin Dashboard
+Tuân thủ quyền nội dung (user chịu trách nhiệm)
+2. Tech Stack bắt buộc
+Backend:
+
+ASP.NET Core 8
+Clean Architecture + SOLID + Dependency Injection
+PostgreSQL + EF Core
+RabbitMQ (job queue + events)
+Redis (cache, rate limit, session)
+Object Storage: MinIO (dev) / S3 hoặc Cloudflare R2 (prod)
+Workers:
+
+Orchestrator Worker (state machine)
+Media Worker (yt-dlp, FFmpeg, Playwright, Demucs)
+AI Worker (Whisper, Translation, TTS)
+Publisher Worker
+AI/Media:
+
+yt-dlp + Playwright (Douyin)
+FFmpeg + ffprobe
+Demucs (optional)
+Whisper large-v3 (qua Groq hoặc local)
+Translation: Gemini (primary) + Groq Llama (fallback)
+TTS: LucyLab / Vivibe API (abstraction)
+YouTube Data API + Facebook Graph API
+Frontend:
+
+React / Next.js (User App + Admin App)
+Infra:
+
+Docker + Docker Compose
+Structured logging (Serilog)
+OpenTelemetry / Prometheus metrics
+Health checks
+3. Architecture tổng thể
+text
+Web Client (React) + Admin Dashboard        ↓ASP.NET Core 8 API (REST + WebSocket/SSE)        ↓PostgreSQL + Redis + RabbitMQ        ↓Orchestrator Worker (State Machine)        ↓Media Worker | AI Worker | Publisher Worker        ↓Object Storage (S3/MinIO/R2)
+4. Pipeline Steps (18 bước)
+DOWNLOAD
+MEDIA INSPECTION
+AUDIO EXTRACTION
+AUDIO SEPARATION (Demucs – fallback được)
+ASR (Whisper)
+SEGMENT / SPEAKER ANALYSIS
+TRANSLATION (Gemini → Groq fallback)
+TRANSLATION QA
+TTS
+TTS DURATION FITTING
+TIMELINE ENGINE
+AUDIO MIXING (ducking)
+SUBTITLE GENERATION
+VIDEO RENDERING
+OUTPUT VALIDATION
+METADATA GENERATION
+PUBLISHING (YouTube / Facebook)
+COMPLETE
+Mỗi step phải có: Input, Output, Status, Progress, Error, RetryCount, StartedAt, CompletedAt, ArtifactPath.
+
+5. Job State Machine
+QUEUED → RESERVING_CREDITS → DOWNLOADING → ANALYZING → EXTRACTING_AUDIO → SEPARATING_AUDIO → TRANSCRIBING → SEGMENT_ANALYSIS → TRANSLATING → TRANSLATION_QA → GENERATING_TTS → FITTING_TTS → BUILDING_TIMELINE → MIXING_AUDIO → GENERATING_SUBTITLE → RENDERING_VIDEO → VALIDATING_OUTPUT → GENERATING_METADATA → UPLOADING_YOUTUBE / UPLOADING_FACEBOOK → COMPLETED
+Các trạng thái phụ: FAILED, CANCELLED, REFUNDING
+
+6. Database Schema chính
+Users, Plans, Wallets, CreditTransactions
+Jobs, JobSteps, JobArtifacts
+MediaFiles, Transcripts, TranscriptSegments, Translations, TtsSegments
+PublishResults, ProviderUsage
+OAuthTokens (encrypted)
+AuditLogs, Subscriptions, Invoices
+7. Credit & Quota System (bắt buộc)
+Ước lượng chi phí trước khi chạy
+Reserve credit
+Tính actual cost theo ProviderUsage
+Deduct + refund phần thừa
+Quota theo plan: concurrent jobs, max duration, minutes/month
+8. Provider Abstraction (bắt buộc)
+C#
+IMediaDownloaderIAudioSeparatorIAsrProviderITranslationProviderITtsProviderIMetadataGeneratorIPublisherIStorageServiceICreditServiceINotificationService
+Hỗ trợ fallback + circuit breaker + cost tracking.
+
+9. Object Storage Layout
+text
+jobs/{jobId}/├── input/original.mp4├── media/media_info.json├── audio/...├── transcript/...├── segments/...├── timeline/...├── render/dubbed_video.mp4├── metadata/...└── logs/...
+10. API chính
+Auth: register, login, refresh
+Jobs: create, list, detail, progress (WebSocket/SSE), cancel, retry, artifacts, download
+Wallet: balance, topup, transactions
+Admin: jobs, users, metrics, force-retry
+OAuth: YouTube/Facebook connect
+11. Quy tắc kỹ thuật quan trọng
+Không hard-code API key / secret
+Không retry toàn bộ pipeline khi 1 step fail
+Không nối audio segment đơn giản nếu timestamp không liên tục
+Không ép TTS speed quá mức
+Không đánh dấu COMPLETE trước khi Validation thành công
+Không upload trước khi Validation pass
+Pipeline chạy background, không giữ HTTP request
+Mỗi step phải idempotent càng nhiều càng tốt
+Structured logging với jobId + step + correlationId
+Không log secret
+12. Security & Compliance
+Validate URL + giới hạn duration/size
+Sanitize path
+Rate limiting
+Encrypted OAuth tokens
+User phải chấp nhận ToS + chịu trách nhiệm về quyền nội dung
+Data retention policy
+Không vượt DRM / CAPTCHA / paywall
+13. Cách làm việc bắt buộc với AI Coding Agent
+Không được generate toàn bộ hệ thống ngay lập tức.
+Phải làm theo đúng thứ tự:
+STEP A – Architecture
+
+Trình bày system architecture
+Component diagram
+Data flow
+Database design chi tiết
+Folder structure
+Interfaces chính
+Job State Machine
+Credit flow
+Docker architecture
+→ Dừng lại và chờ tôi xác nhận Architecture.
+Chỉ sau khi tôi xác nhận mới được sang STEP B.
+STEP B – Project Skeleton
+Tạo solution + các project: Api, Application, Domain, Infrastructure, Workers, Shared.
+STEP C – Database
+Entities, DbContext, Configurations, Migrations, Repositories.
+STEP D – Job System + Credit System
+Create Job, Reserve Credit, Queue, State Machine, Retry, Cancel, Progress.
+STEP E – Pipeline Steps
+Implement từng step một (bắt đầu từ Download → Media Inspection → …).
+
+Mỗi step phải có unit test cơ bản.
+STEP F – Frontend
+User App (Create Job + Progress + Dashboard) + Admin cơ bản.
+STEP G – Docker
+Dockerfile + docker-compose đầy đủ.
+STEP H – Testing & Observability
+Unit test, Integration test, Health checks, Logging, Metrics.
+14. Nguyên tắc khi code
+Clean Architecture
+SOLID
+Dependency Injection
+Repository + Unit of Work khi cần
+Provider Abstraction
+Idempotent steps
+Structured logging
+Retry policy có giới hạn
+Testability cao
+Không tự ý thay đổi architecture đã thống nhất (nếu cần thay phải giải thích trước)
+15. Success Criteria
+Một job thành công khi:
+
+Tất cả step bắt buộc hoàn thành
+Output validation pass
+Credit được trừ đúng
+Artifact lưu trên Object Storage
+Publish (nếu yêu cầu) thành công
+Job status = COMPLETED
+User nhận được link video + youtube/facebook url (nếu có)
+16. MVP Priority (làm theo phase)
+Phase 1: Auth + Credit cơ bản + Core Pipeline (Download → Render + Validation)
+Phase 2: Real-time progress + Object Storage + Cost tracking + User Dashboard
+Phase 3: Publishing + Metadata + OAuth
+Phase 4: Scale (multiple workers, GPU, monitoring, admin, cleanup)
+Phase 5: Advanced (speaker diarization, multi-voice, human-in-the-loop…)
+NHIỆM VỤ ĐẦU TIÊN CỦA BẠN:
+Hãy bắt đầu bằng STEP A – Architecture.
+Trình bày đầy đủ:
+
+System Architecture
+Component Diagram
+Data Flow
+Database Schema chi tiết
+Folder Structure
+Job State Machine
+Credit & Quota Flow
+Pipeline Interfaces
+API Endpoints
+Docker Architecture
+Sau đó dừng lại và chờ tôi xác nhận architecture trước khi viết bất kỳ dòng code nào.
+Không được generate code ở bước này. như này đã ổn hơn bản trước chưa ?
