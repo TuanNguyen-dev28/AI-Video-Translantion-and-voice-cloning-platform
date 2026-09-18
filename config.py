@@ -13,6 +13,11 @@ DATA_DIR = BASE_DIR / "data"
 # Load environment variables from project .env file
 load_dotenv(BASE_DIR / ".env")
 
+
+# Database and Message Queue (used in Docker setup)
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./data/jobs.sqlite3")
+REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
+
 # API Keys
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")

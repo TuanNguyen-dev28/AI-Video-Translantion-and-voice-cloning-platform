@@ -20,3 +20,7 @@ google-auth-oauthlib>=1.1.0
 google-api-python-client>=2.100.0
 facebook-sdk>=3.1.0
 tqdm>=4.66.0
+redis
+rq
+sqlalchemy
+psycopg2-binary

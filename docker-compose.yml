@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: video_user
+      POSTGRES_PASSWORD: video_password
+      POSTGRES_DB: video_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: always
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://video_user:video_password@postgres:5432/video_db
+      - REDIS_URL=redis://redis:6379/0
+      - ASR_PROVIDER=local
+      - TEXT_PROVIDER=local
+      - TTS_PROVIDER=edge
+      - AUTO_PUBLISH=false
+      - LOCAL_LLM_BASE_URL=http://host.docker.internal:11434/v1
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ./data:/app/data
+      - ./output:/app/output
+      - ./.env:/app/.env
+    restart: always
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python worker.py
+    environment:
+      - DATABASE_URL=postgresql://video_user:video_password@postgres:5432/video_db
+      - REDIS_URL=redis://redis:6379/0
+      - ASR_PROVIDER=local
+      - TEXT_PROVIDER=local
+      - TTS_PROVIDER=edge
+      - AUTO_PUBLISH=false
+      - LOCAL_LLM_BASE_URL=http://host.docker.internal:11434/v1
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ./data:/app/data
+      - ./output:/app/output
+      - ./.env:/app/.env
+      - worker_cache:/root/.cache/huggingface
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: always
+
+volumes:
+  postgres_data:
+  redis_data:
+  worker_cache:
