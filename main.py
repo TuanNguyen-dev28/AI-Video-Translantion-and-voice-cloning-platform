@@ -14,9 +14,11 @@ import uuid
 
 from fastapi import FastAPI, File, HTTPException, UploadFile, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from config import AUTO_PUBLISH, WORKER_CONCURRENCY, ensure_data_dir
+from config import AUTO_PUBLISH, BASE_DIR, OUTPUT_DIR, WORKER_CONCURRENCY, ensure_data_dir
 from pipeline import Pipeline
 
 
@@ -292,6 +294,51 @@ async def get_status(job_id: str) -> Dict:
         raise HTTPException(status_code=404, detail="Job not found")
     job["messages"] = job_manager.store.get_messages(job_id)
     return job
+
+
+@app.get("/api/video/{job_id}")
+async def get_video(job_id: str) -> FileResponse:
+    """Serve the dubbed video file for a completed job."""
+    job = job_manager.store.get_job(job_id)
+    if job is None:
+        raise HTTPException(status_code=404, detail="Job not found")
+    result = job.get("result")
+    if not result or not result.get("dubbed_video"):
+        raise HTTPException(status_code=404, detail="Video not ready")
+
+    video_path = Path(result["dubbed_video"])
+    if not video_path.exists():
+        raise HTTPException(status_code=404, detail="Video file not found")
+
+    # Security: ensure the path is within the output directory
+    try:
+        video_path.resolve().relative_to(OUTPUT_DIR.resolve())
+    except ValueError:
+        raise HTTPException(status_code=403, detail="Access denied")
+
+    return FileResponse(
+        video_path,
+        media_type="video/mp4",
+        filename=video_path.name,
+    )
+
+
+# ---------------------------------------------------------------------------
+# Serve the React frontend build (must be mounted LAST so /api routes take
+# precedence).  Run `npm run build` inside frontend/ to populate dist/.
+# ---------------------------------------------------------------------------
+_frontend_dist = BASE_DIR / "frontend" / "dist"
+if _frontend_dist.is_dir():
+    # Serve static assets (JS, CSS, images)
+    app.mount("/assets", StaticFiles(directory=_frontend_dist / "assets"), name="frontend-assets")
+
+    # Catch-all: serve index.html for any non-API route (SPA routing)
+    @app.get("/{full_path:path}")
+    async def serve_spa(full_path: str) -> FileResponse:
+        file_path = _frontend_dist / full_path
+        if file_path.is_file():
+            return FileResponse(file_path)
+        return FileResponse(_frontend_dist / "index.html")
 
 
 if __name__ == "__main__":
